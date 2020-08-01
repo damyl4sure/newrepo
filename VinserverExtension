@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_VMwinServer2019_name": {
+            "defaultValue": "VMwinServer2019",
+            "type": "String"
+        },
+        "disks_VMwinServer2019_disk1_e51b3bc69eef4e2b96ef610fd434a9c6_externalid": {
+            "defaultValue": "/subscriptions/64c3f1cd-9693-45ad-90bd-74689623c920/resourceGroups/LINUX/providers/Microsoft.Compute/disks/VMwinServer2019_disk1_e51b3bc69eef4e2b96ef610fd434a9c6",
+            "type": "String"
+        },
+        "networkInterfaces_vmwinserver2019393_externalid": {
+            "defaultValue": "/subscriptions/64c3f1cd-9693-45ad-90bd-74689623c920/resourceGroups/Linux/providers/Microsoft.Network/networkInterfaces/vmwinserver2019393",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('virtualMachines_VMwinServer2019_name')]",
+            "location": "westeurope",
+            "tags": {
+                "Wnserver2019": ""
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('virtualMachines_VMwinServer2019_name'), '_disk1_e51b3bc69eef4e2b96ef610fd434a9c6')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS",
+                            "id": "[parameters('disks_VMwinServer2019_disk1_e51b3bc69eef4e2b96ef610fd434a9c6_externalid')]"
+                        },
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_VMwinServer2019_name')]",
+                    "adminUsername": "damilola_abioye1",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_vmwinserver2019393_externalid')]"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
