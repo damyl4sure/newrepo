@@ -1,4 +1,6 @@
-public class Simple{
+public class Hello {
 public static void main(String args[]){
-System.out.println("hello javatpoint");
-}}
+  // Print "Hello, world" in the terminal window.
+System.out.println("Hello, world");
+}
+}
